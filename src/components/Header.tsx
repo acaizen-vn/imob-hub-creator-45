@@ -20,7 +20,7 @@ interface HeaderProps {
 export const Header = ({ onSearch }: HeaderProps) => {
   const { theme, toggleTheme } = useTheme();
   const [filters, setFilters] = useState<SearchFilters>({
-    purpose: '',
+    purpose: 'buy',
     type: '',
     location: '',
   });
@@ -67,32 +67,20 @@ export const Header = ({ onSearch }: HeaderProps) => {
       <div className="relative z-10 flex flex-col items-center justify-center px-6 pt-16 pb-20">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            Encontre o <span className="text-yellow-300">imóvel perfeito</span>
-            <br />para você
+            Encontre o <span className="text-yellow-300">imóvel perfeito:</span>
           </h1>
+          <h2 className="text-2xl md:text-3xl font-semibold text-white/90 mb-4">
+            busca rápida e diversas opções
+          </h2>
           <p className="text-xl text-white/90 max-w-2xl mx-auto">
-            {settings.siteDescription}
+            compre seu imóvel com tranquilidade e eficiência
           </p>
         </div>
 
         {/* Search Form */}
         <div className="w-full max-w-4xl">
           <div className="glass-effect rounded-2xl p-6 md:p-8">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-white/80">Pretensão</label>
-                <Select value={filters.purpose} onValueChange={(value) => setFilters({ ...filters, purpose: value })}>
-                  <SelectTrigger className="bg-white/20 border-white/30 text-white">
-                    <SelectValue placeholder="Selecione..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="buy">Comprar</SelectItem>
-                    <SelectItem value="rent">Alugar</SelectItem>
-                    <SelectItem value="season">Temporada</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-white/80">Tipo de Imóvel</label>
                 <Select value={filters.type} onValueChange={(value) => setFilters({ ...filters, type: value })}>
@@ -100,10 +88,13 @@ export const Header = ({ onSearch }: HeaderProps) => {
                     <SelectValue placeholder="Selecione..." />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="house">Casa</SelectItem>
-                    <SelectItem value="apartment">Apartamento</SelectItem>
-                    <SelectItem value="commercial">Comercial</SelectItem>
-                    <SelectItem value="land">Terreno</SelectItem>
+                    <SelectItem value="casa">Casa</SelectItem>
+                    <SelectItem value="apartamento">Apartamento</SelectItem>
+                    <SelectItem value="apartamento-garden">Apartamento Garden</SelectItem>
+                    <SelectItem value="casa-condominio">Casa de Condomínio</SelectItem>
+                    <SelectItem value="studio">Studio</SelectItem>
+                    <SelectItem value="cobertura">Cobertura</SelectItem>
+                    <SelectItem value="terreno-lote">Terreno/Lote</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -135,7 +126,7 @@ export const Header = ({ onSearch }: HeaderProps) => {
 
             <div className="flex flex-wrap gap-2 justify-center">
               <span className="text-sm text-white/80">Buscar por:</span>
-              {['Apartamento SP', 'Casa RJ', 'Comercial BH'].map((tag) => (
+              {['Casa SP', 'Apartamento RJ', 'Cobertura BH'].map((tag) => (
                 <button
                   key={tag}
                   className="px-3 py-1 text-xs bg-white/20 text-white rounded-full hover:bg-white/30 transition-colors"

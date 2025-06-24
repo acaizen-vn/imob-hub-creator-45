@@ -104,6 +104,27 @@ export const SiteSettings = () => {
 
         <Card>
           <CardHeader>
+            <CardTitle>Tipos de Imóveis</CardTitle>
+            <CardDescription>Tipos disponíveis no sistema</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
+              <div className="p-2 bg-gray-100 rounded">Casa</div>
+              <div className="p-2 bg-gray-100 rounded">Apartamento</div>
+              <div className="p-2 bg-gray-100 rounded">Apartamento Garden</div>
+              <div className="p-2 bg-gray-100 rounded">Casa de Condomínio</div>
+              <div className="p-2 bg-gray-100 rounded">Studio</div>
+              <div className="p-2 bg-gray-100 rounded">Cobertura</div>
+              <div className="p-2 bg-gray-100 rounded">Terreno/Lote</div>
+            </div>
+            <p className="text-sm text-gray-600 mt-2">
+              Tipos configurados para venda de imóveis
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
             <CardTitle>Contato</CardTitle>
             <CardDescription>Configure os dados de contato</CardDescription>
           </CardHeader>
