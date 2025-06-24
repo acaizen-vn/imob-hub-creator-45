@@ -28,6 +28,10 @@ const AdminDashboard = () => {
     navigate('/admin');
   };
 
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab as ActiveTab);
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case 'properties':
@@ -52,7 +56,7 @@ const AdminDashboard = () => {
       <div className="flex">
         <Sidebar 
           activeTab={activeTab} 
-          onTabChange={setActiveTab} 
+          onTabChange={handleTabChange} 
         />
         
         <main className="flex-1 p-6">
