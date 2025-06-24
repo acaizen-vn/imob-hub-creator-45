@@ -7,7 +7,7 @@ import { CityManager } from '@/components/admin/CityManager';
 import { NewsManager } from '@/components/admin/NewsManager';
 import { SiteSettings } from '@/components/admin/SiteSettings';
 import { SEOTools } from '@/components/admin/SEOTools';
-import { MarketingTools } from '@/components/admin/MarketingTools';
+import { AdvancedMarketingTools } from '@/components/admin/AdvancedMarketingTools';
 import { authService } from '@/utils/storage';
 import { useNavigate } from 'react-router-dom';
 
@@ -46,14 +46,14 @@ const AdminDashboard = () => {
       case 'seo':
         return <SEOTools />;
       case 'marketing':
-        return <MarketingTools />;
+        return <AdvancedMarketingTools />;
       default:
         return <PropertyManager />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Header onLogout={handleLogout} />
       
       <div className="flex">

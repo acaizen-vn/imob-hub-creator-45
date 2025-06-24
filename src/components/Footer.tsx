@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { Building, Instagram, Facebook, Phone, Mail, MapPin, Clock } from 'lucide-react';
+import { Instagram, Facebook, Phone, Mail, MapPin, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { settingsService } from '@/utils/storage';
 import { Settings } from '@/types';
@@ -20,15 +20,21 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <Building className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold">{settings.siteName}</span>
+            <div className="flex items-center space-x-3">
+              <img 
+                src="/logo.png" 
+                alt="Conquista Imob" 
+                className="h-12 w-auto brightness-0 invert"
+              />
+              <div>
+                <span className="text-2xl font-bold">{settings.siteName}</span>
+                <p className="text-sm text-gray-400">{settings.creci}</p>
+              </div>
             </div>
             <p className="text-gray-400">
               {settings.siteDescription}
             </p>
             <div className="text-sm text-gray-400">
-              <p className="font-semibold">{settings.creci}</p>
               <div className="flex items-center mt-2">
                 <Clock className="h-3 w-3 mr-1" />
                 {settings.workingHours}
