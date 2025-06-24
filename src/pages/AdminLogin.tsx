@@ -11,10 +11,17 @@ import { authService } from '@/utils/storage';
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    // Check if user is already logged in
+    const user = authService.getCurrentUser();
+    if (user) {
+      navigate('/admin/dashboard');
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,25 +29,24 @@ const AdminLogin = () => {
 
     try {
       const user = authService.login(email, password);
-      
       if (user) {
         toast({
-          title: 'Login realizado com sucesso!',
-          description: `Bem-vindo, ${user.name}`,
+          title: "Login realizado com sucesso!",
+          description: "Redirecionando para o painel administrativo...",
         });
         navigate('/admin/dashboard');
       } else {
         toast({
-          title: 'Erro ao fazer login',
-          description: 'Email ou senha incorretos',
-          variant: 'destructive',
+          title: "Erro no login",
+          description: "Email ou senha incorretos.",
+          variant: "destructive",
         });
       }
     } catch (error) {
       toast({
-        title: 'Erro ao fazer login',
-        description: 'Tente novamente mais tarde',
-        variant: 'destructive',
+        title: "Erro no login",
+        description: "Ocorreu um erro ao tentar fazer login.",
+        variant: "destructive",
       });
     } finally {
       setLoading(false);
