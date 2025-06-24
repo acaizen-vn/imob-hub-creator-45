@@ -4,16 +4,20 @@ import { Header } from '@/components/Header';
 import { PropertyCarousel } from '@/components/PropertyCarousel';
 import { CityButtons } from '@/components/CityButtons';
 import { NewsCarousel } from '@/components/NewsCarousel';
+import { AboutSection } from '@/components/AboutSection';
+import { ContactSection } from '@/components/ContactSection';
 import { Map } from '@/components/Map';
 import { Footer } from '@/components/Footer';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
 import { propertyService, initializeDefaultData } from '@/utils/storage';
 import { Property } from '@/types';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
   const [featuredProperties, setFeaturedProperties] = useState<Property[]>([]);
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
   const [selectedCity, setSelectedCity] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Initialize default data on first load
@@ -46,7 +50,7 @@ const Index = () => {
 
   const handlePropertyClick = (property: Property) => {
     console.log('Property clicked:', property);
-    // Here you would typically navigate to property detail page
+    navigate(`/property/${property.id}`);
   };
 
   return (
@@ -70,7 +74,11 @@ const Index = () => {
         onPropertyClick={handlePropertyClick}
       />
       
+      <AboutSection />
+      
       <NewsCarousel />
+      
+      <ContactSection />
       
       <Map />
       

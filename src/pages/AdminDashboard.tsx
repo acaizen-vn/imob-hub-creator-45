@@ -7,10 +7,11 @@ import { CityManager } from '@/components/admin/CityManager';
 import { NewsManager } from '@/components/admin/NewsManager';
 import { SiteSettings } from '@/components/admin/SiteSettings';
 import { SEOTools } from '@/components/admin/SEOTools';
+import { MarketingTools } from '@/components/admin/MarketingTools';
 import { authService } from '@/utils/storage';
 import { useNavigate } from 'react-router-dom';
 
-type ActiveTab = 'properties' | 'cities' | 'news' | 'settings' | 'seo';
+type ActiveTab = 'properties' | 'cities' | 'news' | 'settings' | 'seo' | 'marketing';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('properties');
@@ -44,6 +45,8 @@ const AdminDashboard = () => {
         return <SiteSettings />;
       case 'seo':
         return <SEOTools />;
+      case 'marketing':
+        return <MarketingTools />;
       default:
         return <PropertyManager />;
     }

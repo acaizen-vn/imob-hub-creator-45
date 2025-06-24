@@ -1,4 +1,3 @@
-
 import { Property, City, News, User, Settings } from '@/types';
 
 const STORAGE_KEYS = {
@@ -61,21 +60,44 @@ export const initializeDefaultData = () => {
     storage.set(STORAGE_KEYS.USERS, [defaultUser]);
   }
 
-  // Default settings
+  // Default settings with updated information
   const settings = storage.getSingle<Settings>(STORAGE_KEYS.SETTINGS);
   if (!settings) {
     const defaultSettings: Settings = {
-      siteName: 'Conquista Imob Hub',
-      siteDescription: 'Sua imobiliária digital completa',
+      siteName: 'Conquista Imóveis',
+      siteDescription: 'CRECI J-6602 - Referência em Barra Mansa e Volta Redonda',
       logo: '/placeholder.svg',
-      whatsappNumber: '+5511999999999',
-      mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1!2d-46.6!3d-23.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDMwJzAwLjAiUyA0NsKwMzYnMDAuMCJX!5e0!3m2!1spt!2sbr!4v1000000000000!5m2!1spt!2sbr',
+      whatsappNumber: '+5524998753750',
+      mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3699.0!2d-44.1!3d-22.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDMwJzAwLjAiUyA0NMKwMDYnMDAuMCJX!5e0!3m2!1spt!2sbr!4v1000000000000!5m2!1spt!2sbr',
       socialMedia: {
-        instagram: 'https://instagram.com/conquistaimobhub',
-        facebook: 'https://facebook.com/conquistaimobhub',
-        whatsapp: 'https://wa.me/5511999999999',
+        instagram: 'https://instagram.com/conquistaimobiliaria',
+        facebook: 'https://facebook.com/conquistaimobiliaria',
+        whatsapp: 'https://wa.me/5524998753750',
       },
       theme: 'light',
+      offices: [
+        {
+          id: '1',
+          name: 'Volta Redonda',
+          address: 'Rua Edson Passos, 66, Aterrado',
+          city: 'Volta Redonda - Rio de Janeiro',
+          whatsapp: '(24) 99875-3750',
+          mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3699.0!2d-44.1!3d-22.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDMwJzAwLjAiUyA0NMKwMDYnMDAuMCJX!5e0!3m2!1spt!2sbr!4v1000000000000!5m2!1spt!2sbr'
+        },
+        {
+          id: '2',
+          name: 'Barra Mansa',
+          address: 'Rua Michel Wardini, 10, Centro',
+          city: 'Barra Mansa - Rio de Janeiro',
+          whatsapp: '(24) 99875-3750',
+          mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3699.0!2d-44.2!3d-22.6!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDM2JzAwLjAiUyA0NMKwMTInMDAuMCJX!5e0!3m2!1spt!2sbr!4v1000000000000!5m2!1spt!2sbr'
+        }
+      ],
+      workingHours: '09:00 às 18:00',
+      creci: 'CRECI J-6602',
+      privacyPolicy: 'A Conquista Imóveis respeita sua privacidade. Coletamos apenas os dados necessários para contato, simulações e envio de informações sobre imóveis.\n\nTodos os dados são protegidos conforme a LGPD e só são compartilhados com instituições financeiras quando necessário.\n\nVocê pode solicitar acesso, correção ou exclusão dos seus dados a qualquer momento pelo e-mail: contato@conquistarj.com.br.\n\nUtilizamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com nossa política de privacidade.',
+      termsOfUse: 'Ao acessar nosso site, você concorda com os termos de uso da Conquista Imóveis. Coletamos apenas os dados necessários, como nome, telefone e e-mail, para oferecer um atendimento personalizado, simular financiamentos e apresentar as melhores oportunidades.\n\nSeguimos as diretrizes da Lei Geral de Proteção de Dados (LGPD) e garantimos a segurança das suas informações. Seus dados nunca serão compartilhados sem seu consentimento.\n\nAo continuar navegando, você aceita estes termos e confia na nossa forma de trabalhar: com ética, segurança e respeito ao seu sonho de conquistar um imóvel.',
+      aboutUs: 'Com 12 anos de atuação no mercado imobiliário, a Conquista Imóveis é referência em Barra Mansa e Volta Redonda na intermediação de imóveis residenciais, comerciais e empreendimentos na planta. Ao longo dessa trajetória, já realizamos o sonho de mais de 750 famílias, sempre com transparência, credibilidade e atendimento personalizado.\n\nSomos correspondente Caixa autorizado, o que nos permite agilizar e facilitar o processo de financiamento habitacional, com simulações sob medida e aprovações mais rápidas para nossos clientes. Além disso, oferecemos assessoria jurídica especializada em todas as etapas da negociação.\n\nMais que vender imóveis, nosso propósito é entregar segurança, confiança e realizar conquistas. Afinal, o seu sonho também é o nosso.'
     };
     storage.setSingle(STORAGE_KEYS.SETTINGS, defaultSettings);
   }
@@ -176,6 +198,16 @@ export const cityService = {
     
     return newCity;
   },
+
+  delete: (id: string): boolean => {
+    const cities = storage.get<City>(STORAGE_KEYS.CITIES);
+    const filtered = cities.filter(c => c.id !== id);
+    
+    if (filtered.length === cities.length) return false;
+    
+    storage.set(STORAGE_KEYS.CITIES, filtered);
+    return true;
+  },
 };
 
 export const newsService = {
@@ -222,17 +254,40 @@ export const authService = {
 export const settingsService = {
   get: (): Settings => {
     return storage.getSingle<Settings>(STORAGE_KEYS.SETTINGS) || {
-      siteName: 'Conquista Imob Hub',
-      siteDescription: 'Sua imobiliária digital completa',
+      siteName: 'Conquista Imóveis',
+      siteDescription: 'CRECI J-6602 - Referência em Barra Mansa e Volta Redonda',
       logo: '/placeholder.svg',
-      whatsappNumber: '+5511999999999',
-      mapUrl: '',
+      whatsappNumber: '+5524998753750',
+      mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3699.0!2d-44.1!3d-22.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDMwJzAwLjAiUyA0NMKwMDYnMDAuMCJX!5e0!3m2!1spt!2sbr!4v1000000000000!5m2!1spt!2sbr',
       socialMedia: {
-        instagram: '',
-        facebook: '',
-        whatsapp: '',
+        instagram: 'https://instagram.com/conquistaimobiliaria',
+        facebook: 'https://facebook.com/conquistaimobiliaria',
+        whatsapp: 'https://wa.me/5524998753750',
       },
       theme: 'light',
+      offices: [
+        {
+          id: '1',
+          name: 'Volta Redonda',
+          address: 'Rua Edson Passos, 66, Aterrado',
+          city: 'Volta Redonda - Rio de Janeiro',
+          whatsapp: '(24) 99875-3750',
+          mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3699.0!2d-44.1!3d-22.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDMwJzAwLjAiUyA0NMKwMDYnMDAuMCJX!5e0!3m2!1spt!2sbr!4v1000000000000!5m2!1spt!2sbr'
+        },
+        {
+          id: '2',
+          name: 'Barra Mansa',
+          address: 'Rua Michel Wardini, 10, Centro',
+          city: 'Barra Mansa - Rio de Janeiro',
+          whatsapp: '(24) 99875-3750',
+          mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3699.0!2d-44.2!3d-22.6!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDM2JzAwLjAiUyA0NMKwMTInMDAuMCJX!5e0!3m2!1spt!2sbr!4v1000000000000!5m2!1spt!2sbr'
+        }
+      ],
+      workingHours: '09:00 às 18:00',
+      creci: 'CRECI J-6602',
+      privacyPolicy: 'A Conquista Imóveis respeita sua privacidade. Coletamos apenas os dados necessários para contato, simulações e envio de informações sobre imóveis.\n\nTodos os dados são protegidos conforme a LGPD e só são compartilhados com instituições financeiras quando necessário.\n\nVocê pode solicitar acesso, correção ou exclusão dos seus dados a qualquer momento pelo e-mail: contato@conquistarj.com.br.\n\nUtilizamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com nossa política de privacidade.',
+      termsOfUse: 'Ao acessar nosso site, você concorda com os termos de uso da Conquista Imóveis. Coletamos apenas os dados necessários, como nome, telefone e e-mail, para oferecer um atendimento personalizado, simular financiamentos e apresentar as melhores oportunidades.\n\nSeguimos as diretrizes da Lei Geral de Proteção de Dados (LGPD) e garantimos a segurança das suas informações. Seus dados nunca serão compartilhados sem seu consentimento.\n\nAo continuar navegando, você aceita estes termos e confia na nossa forma de trabalhar: com ética, segurança e respeito ao seu sonho de conquistar um imóvel.',
+      aboutUs: 'Com 12 anos de atuação no mercado imobiliário, a Conquista Imóveis é referência em Barra Mansa e Volta Redonda na intermediação de imóveis residenciais, comerciais e empreendimentos na planta. Ao longo dessa trajetória, já realizamos o sonho de mais de 750 famílias, sempre com transparência, credibilidade e atendimento personalizado.\n\nSomos correspondente Caixa autorizado, o que nos permite agilizar e facilitar o processo de financiamento habitacional, com simulações sob medida e aprovações mais rápidas para nossos clientes. Além disso, oferecemos assessoria jurídica especializada em todas as etapas da negociação.\n\nMais que vender imóveis, nosso propósito é entregar segurança, confiança e realizar conquistas. Afinal, o seu sonho também é o nosso.'
     };
   },
 

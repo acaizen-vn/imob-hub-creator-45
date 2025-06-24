@@ -42,6 +42,15 @@ export interface User {
   role: 'admin' | 'user';
 }
 
+export interface Office {
+  id: string;
+  name: string;
+  address: string;
+  city: string;
+  whatsapp: string;
+  mapUrl: string;
+}
+
 export interface Settings {
   siteName: string;
   siteDescription: string;
@@ -54,4 +63,20 @@ export interface Settings {
     whatsapp: string;
   };
   theme: 'light' | 'dark';
+  offices?: Office[];
+  workingHours?: string;
+  creci?: string;
+  privacyPolicy?: string;
+  termsOfUse?: string;
+  aboutUs?: string;
+}
+
+export interface ContactForm {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  propertyId?: string;
+  createdAt: string;
 }

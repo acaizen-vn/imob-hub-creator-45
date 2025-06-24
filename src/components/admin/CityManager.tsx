@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2 } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -38,6 +38,14 @@ export const CityManager = () => {
         description: "Não foi possível cadastrar a cidade",
         variant: "destructive" 
       });
+    }
+  };
+
+  const handleDelete = (id: string) => {
+    if (window.confirm('Tem certeza que deseja excluir esta cidade?')) {
+      cityService.delete(id);
+      setCities(cityService.getAll());
+      toast({ title: "Cidade excluída com sucesso!" });
     }
   };
 
@@ -98,6 +106,7 @@ export const CityManager = () => {
               <TableHead>Cidade</TableHead>
               <TableHead>Estado</TableHead>
               <TableHead>Imóveis</TableHead>
+              <TableHead>Ações</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -106,6 +115,16 @@ export const CityManager = () => {
                 <TableCell className="font-medium">{city.name}</TableCell>
                 <TableCell>{city.state}</TableCell>
                 <TableCell>{city.propertiesCount}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleDelete(city.id)}
+                    className="text-red-600 hover:text-red-700"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
