@@ -7,6 +7,7 @@ import { MapPin, Navigation, Zap } from 'lucide-react';
 export const Map = () => {
   const [mapUrl, setMapUrl] = useState('');
   const [selectedCity, setSelectedCity] = useState('barra-mansa');
+  const [mapKey, setMapKey] = useState(0); // Add key to force iframe reload
 
   // URLs específicas para cada cidade
   const cityMaps = {
@@ -16,12 +17,17 @@ export const Map = () => {
 
   useEffect(() => {
     const settings = settingsService.get();
-    setMapUrl(settings.mapUrl || cityMaps[selectedCity as keyof typeof cityMaps]);
+    const newMapUrl = settings.mapUrl || cityMaps[selectedCity as keyof typeof cityMaps];
+    setMapUrl(newMapUrl);
   }, [selectedCity]);
 
   const handleCitySelect = (cityId: string) => {
+    console.log('City selected:', cityId);
     setSelectedCity(cityId);
-    setMapUrl(cityMaps[cityId as keyof typeof cityMaps]);
+    const newMapUrl = cityMaps[cityId as keyof typeof cityMaps];
+    setMapUrl(newMapUrl);
+    setMapKey(prev => prev + 1); // Force iframe reload
+    console.log('New map URL:', newMapUrl);
   };
 
   if (!mapUrl && !cityMaps[selectedCity as keyof typeof cityMaps]) {
@@ -96,6 +102,7 @@ export const Map = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-20 rounded-3xl" />
             
             <iframe
+              key={mapKey}
               src={mapUrl || cityMaps[selectedCity as keyof typeof cityMaps]}
               width="100%"
               height="500"
