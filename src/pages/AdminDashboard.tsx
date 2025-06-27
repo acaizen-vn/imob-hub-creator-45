@@ -53,7 +53,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900">
       <Header onLogout={handleLogout} />
       
       <div className="flex">
@@ -63,7 +63,9 @@ const AdminDashboard = () => {
         />
         
         <main className="flex-1 p-6">
-          {renderContent()}
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 shadow-xl">
+            {renderContent()}
+          </div>
         </main>
       </div>
     </div>

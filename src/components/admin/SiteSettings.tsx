@@ -55,111 +55,118 @@ export const SiteSettings = () => {
   };
 
   return (
-    <div>
+    <div className="text-white">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold">Configurações do Site</h2>
-        <p className="text-gray-600">Gerencie as configurações gerais do seu site</p>
+        <h2 className="text-2xl font-bold text-white drop-shadow-lg">Configurações do Site</h2>
+        <p className="text-slate-200">Gerencie as configurações gerais do seu site</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <Card>
+        <Card className="bg-white/10 backdrop-blur-md border-white/20 shadow-xl">
           <CardHeader>
-            <CardTitle>Informações Básicas</CardTitle>
-            <CardDescription>Configure as informações principais do site</CardDescription>
+            <CardTitle className="text-white">Informações Básicas</CardTitle>
+            <CardDescription className="text-slate-200">Configure as informações principais do site</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="siteName">Nome da Imobiliária</Label>
+              <Label htmlFor="siteName" className="text-white font-medium">Nome da Imobiliária</Label>
               <Input
                 id="siteName"
                 value={settings.siteName}
                 onChange={(e) => setSettings({ ...settings, siteName: e.target.value })}
+                className="bg-white/15 border-white/30 text-white placeholder:text-slate-300 hover:bg-white/25 transition-colors duration-300"
               />
             </div>
 
             <div>
-              <Label htmlFor="siteDescription">Descrição do Site</Label>
+              <Label htmlFor="siteDescription" className="text-white font-medium">Descrição do Site</Label>
               <Textarea
                 id="siteDescription"
                 value={settings.siteDescription}
                 onChange={(e) => setSettings({ ...settings, siteDescription: e.target.value })}
                 rows={3}
+                className="bg-white/15 border-white/30 text-white placeholder:text-slate-300 hover:bg-white/25 transition-colors duration-300"
               />
             </div>
 
             <div>
-              <Label htmlFor="logo">Logo da Empresa</Label>
+              <Label htmlFor="logo" className="text-white font-medium">Logo da Empresa</Label>
               <Input
                 id="logo"
                 type="file"
                 accept="image/*"
                 onChange={handleLogoUpload}
+                className="bg-white/15 border-white/30 text-white file:bg-blue-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-1 hover:bg-white/25 transition-colors duration-300"
               />
               {settings.logo && (
-                <img src={settings.logo} alt="Logo" className="mt-2 w-32 h-32 object-contain" />
+                <div className="mt-2 p-2 bg-white/10 rounded-lg">
+                  <img src={settings.logo} alt="Logo" className="w-32 h-32 object-contain" />
+                </div>
               )}
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white/10 backdrop-blur-md border-white/20 shadow-xl">
           <CardHeader>
-            <CardTitle>Tipos de Imóveis</CardTitle>
-            <CardDescription>Tipos disponíveis no sistema</CardDescription>
+            <CardTitle className="text-white">Tipos de Imóveis</CardTitle>
+            <CardDescription className="text-slate-200">Tipos disponíveis no sistema</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
-              <div className="p-2 bg-gray-100 rounded">Casa</div>
-              <div className="p-2 bg-gray-100 rounded">Apartamento</div>
-              <div className="p-2 bg-gray-100 rounded">Apartamento Garden</div>
-              <div className="p-2 bg-gray-100 rounded">Casa de Condomínio</div>
-              <div className="p-2 bg-gray-100 rounded">Studio</div>
-              <div className="p-2 bg-gray-100 rounded">Cobertura</div>
-              <div className="p-2 bg-gray-100 rounded">Terreno/Lote</div>
+              <div className="p-2 bg-blue-600/30 text-white rounded border border-blue-400/30">Casa</div>
+              <div className="p-2 bg-blue-600/30 text-white rounded border border-blue-400/30">Apartamento</div>
+              <div className="p-2 bg-blue-600/30 text-white rounded border border-blue-400/30">Apartamento Garden</div>
+              <div className="p-2 bg-blue-600/30 text-white rounded border border-blue-400/30">Casa de Condomínio</div>
+              <div className="p-2 bg-blue-600/30 text-white rounded border border-blue-400/30">Studio</div>
+              <div className="p-2 bg-blue-600/30 text-white rounded border border-blue-400/30">Cobertura</div>
+              <div className="p-2 bg-blue-600/30 text-white rounded border border-blue-400/30">Terreno/Lote</div>
             </div>
-            <p className="text-sm text-gray-600 mt-2">
+            <p className="text-sm text-slate-200 mt-2">
               Tipos configurados para venda de imóveis
             </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white/10 backdrop-blur-md border-white/20 shadow-xl">
           <CardHeader>
-            <CardTitle>Contato</CardTitle>
-            <CardDescription>Configure os dados de contato</CardDescription>
+            <CardTitle className="text-white">Contato</CardTitle>
+            <CardDescription className="text-slate-200">Configure os dados de contato</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="whatsapp">WhatsApp (com DDD)</Label>
+              <Label htmlFor="whatsapp" className="text-white font-medium">WhatsApp (com DDD)</Label>
               <Input
                 id="whatsapp"
                 value={settings.whatsappNumber}
                 onChange={(e) => setSettings({ ...settings, whatsappNumber: e.target.value })}
                 placeholder="+5511999999999"
+                className="bg-white/15 border-white/30 text-white placeholder:text-slate-300 hover:bg-white/25 transition-colors duration-300"
               />
             </div>
 
             <div>
-              <Label htmlFor="mapUrl">URL do Google Maps (embed)</Label>
+              <Label htmlFor="mapUrl" className="text-white font-medium">URL do Google Maps (embed)</Label>
               <Textarea
                 id="mapUrl"
                 value={settings.mapUrl}
                 onChange={(e) => setSettings({ ...settings, mapUrl: e.target.value })}
                 placeholder="Cole aqui a URL de incorporação do Google Maps"
                 rows={3}
+                className="bg-white/15 border-white/30 text-white placeholder:text-slate-300 hover:bg-white/25 transition-colors duration-300"
               />
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white/10 backdrop-blur-md border-white/20 shadow-xl">
           <CardHeader>
-            <CardTitle>Redes Sociais</CardTitle>
-            <CardDescription>Configure os links das redes sociais</CardDescription>
+            <CardTitle className="text-white">Redes Sociais</CardTitle>
+            <CardDescription className="text-slate-200">Configure os links das redes sociais</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="instagram">Instagram</Label>
+              <Label htmlFor="instagram" className="text-white font-medium">Instagram</Label>
               <Input
                 id="instagram"
                 value={settings.socialMedia.instagram}
@@ -168,11 +175,12 @@ export const SiteSettings = () => {
                   socialMedia: { ...settings.socialMedia, instagram: e.target.value }
                 })}
                 placeholder="https://instagram.com/seuperfil"
+                className="bg-white/15 border-white/30 text-white placeholder:text-slate-300 hover:bg-white/25 transition-colors duration-300"
               />
             </div>
 
             <div>
-              <Label htmlFor="facebook">Facebook</Label>
+              <Label htmlFor="facebook" className="text-white font-medium">Facebook</Label>
               <Input
                 id="facebook"
                 value={settings.socialMedia.facebook}
@@ -181,11 +189,12 @@ export const SiteSettings = () => {
                   socialMedia: { ...settings.socialMedia, facebook: e.target.value }
                 })}
                 placeholder="https://facebook.com/suapagina"
+                className="bg-white/15 border-white/30 text-white placeholder:text-slate-300 hover:bg-white/25 transition-colors duration-300"
               />
             </div>
 
             <div>
-              <Label htmlFor="whatsappSocial">WhatsApp (link)</Label>
+              <Label htmlFor="whatsappSocial" className="text-white font-medium">WhatsApp (link)</Label>
               <Input
                 id="whatsappSocial"
                 value={settings.socialMedia.whatsapp}
@@ -194,13 +203,18 @@ export const SiteSettings = () => {
                   socialMedia: { ...settings.socialMedia, whatsapp: e.target.value }
                 })}
                 placeholder="https://wa.me/5511999999999"
+                className="bg-white/15 border-white/30 text-white placeholder:text-slate-300 hover:bg-white/25 transition-colors duration-300"
               />
             </div>
           </CardContent>
         </Card>
 
         <div className="flex justify-end">
-          <Button type="submit" size="lg">
+          <Button 
+            type="submit" 
+            size="lg"
+            className="bg-gradient-to-r from-blue-600 to-slate-600 hover:from-blue-700 hover:to-slate-700 text-white font-semibold shadow-lg border border-blue-400/30 hover:shadow-xl transition-all duration-300"
+          >
             Salvar Configurações
           </Button>
         </div>
