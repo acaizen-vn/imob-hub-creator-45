@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { Building, Instagram, Facebook, Phone, Mail, MapPin, MessageCircle } from 'lucide-react';
+import { Building, Instagram, Facebook, Phone, Mail, MapPin, MessageCircle, Youtube } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { settingsService } from '@/utils/storage';
 import { Settings } from '@/types';
@@ -58,30 +58,36 @@ export const Footer = () => {
             </div>
             
             <div className="flex space-x-3">
-              {settings.socialMedia.instagram && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8"
-                  asChild
-                >
-                  <a href={settings.socialMedia.instagram} target="_blank" rel="noopener noreferrer">
-                    <Instagram className="h-4 w-4" />
-                  </a>
-                </Button>
-              )}
-              {settings.socialMedia.facebook && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8"
-                  asChild
-                >
-                  <a href={settings.socialMedia.facebook} target="_blank" rel="noopener noreferrer">
-                    <Facebook className="h-4 w-4" />
-                  </a>
-                </Button>
-              )}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8"
+                asChild
+              >
+                <a href="https://www.instagram.com/conquistarj/" target="_blank" rel="noopener noreferrer">
+                  <Instagram className="h-4 w-4" />
+                </a>
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8"
+                asChild
+              >
+                <a href="https://youtube.com/@conquistarj?si=-wpVEWgpTxPPT78B" target="_blank" rel="noopener noreferrer">
+                  <Youtube className="h-4 w-4" />
+                </a>
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8"
+                asChild
+              >
+                <a href="https://www.facebook.com/share/16shPMsYRb/" target="_blank" rel="noopener noreferrer">
+                  <Facebook className="h-4 w-4" />
+                </a>
+              </Button>
             </div>
           </div>
         </div>

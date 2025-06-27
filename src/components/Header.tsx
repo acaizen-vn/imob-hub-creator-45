@@ -42,17 +42,13 @@ export const Header = ({ onSearch }: HeaderProps) => {
 
       {/* Navigation */}
       <nav className="relative z-10 flex items-center justify-between p-6">
-        <div className="flex items-center space-x-3">
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2">
+        <div className="flex items-center">
+          <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3 hover:bg-white/30 transition-all duration-300 shadow-lg">
             <img 
               src="/lovable-uploads/d550ca61-f9b1-41f1-9721-2be817f1ec35.png" 
               alt="Conquista Imóveis" 
-              className="h-10 w-auto"
+              className="h-12 w-auto filter brightness-110 contrast-110"
             />
-          </div>
-          <div className="hidden sm:block">
-            <div className="text-white text-xl font-bold">Conquista</div>
-            <div className="text-white/80 text-sm font-medium">IMÓVEIS</div>
           </div>
         </div>
         

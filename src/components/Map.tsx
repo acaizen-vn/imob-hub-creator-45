@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { settingsService } from '@/utils/storage';
 import { CitySelector } from '@/components/CitySelector';
-import { MapPin, Navigation, Zap } from 'lucide-react';
+import { MapPin, Navigation, Zap, Clock } from 'lucide-react';
 
 export const Map = () => {
   const [mapUrl, setMapUrl] = useState('');
@@ -11,8 +11,23 @@ export const Map = () => {
 
   // URLs específicas para cada cidade
   const cityMaps = {
-    'barra-mansa': 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29436.123456789!2d-44.1742!3d-22.5441!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9c8b6a6b6a6b6a6b%3A0x6b6a6b6a6b6a6b6a!2sBarra%20Mansa%2C%20RJ!5e0!3m2!1spt-BR!2sbr!4v1234567890123!5m2!1spt-BR!2sbr',
-    'volta-redonda': 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29436.123456789!2d-44.1045!3d-22.5231!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9c8b6a6b6a6b6a6b%3A0x6b6a6b6a6b6a6b6a!2sVolta%20Redonda%2C%20RJ!5e0!3m2!1spt-BR!2sbr!4v1234567890123!5m2!1spt-BR!2sbr'
+    'barra-mansa': 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3665.123456789!2d-44.1742!3d-22.5441!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9c8b6a6b6a6b6a6b%3A0x6b6a6b6a6b6a6b6a!2sRua%20Michel%20Wardini%2C%2010%2C%20Centro%2C%20Barra%20Mansa%20-%20RJ!5e0!3m2!1spt-BR!2sbr!4v1234567890123!5m2!1spt-BR!2sbr',
+    'volta-redonda': 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3665.123456789!2d-44.1045!3d-22.5231!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9c8b6a6b6a6b6a6b%3A0x6b6a6b6a6b6a6b6a!2sRua%20Edson%20Passos%2C%2066%2C%20Aterrado%2C%20Volta%20Redonda%20-%20RJ!5e0!3m2!1spt-BR!2sbr!4v1234567890123!5m2!1spt-BR!2sbr'
+  };
+
+  const cityInfo = {
+    'barra-mansa': {
+      name: 'Barra Mansa',
+      address: 'Rua Michel Wardini, 10, Centro',
+      city: 'Barra Mansa - Rio de Janeiro',
+      hours: '09 às 18h'
+    },
+    'volta-redonda': {
+      name: 'Volta Redonda',
+      address: 'Rua Edson Passos, 66, Aterrado',
+      city: 'Volta Redonda - Rio de Janeiro',
+      hours: '09 às 18h'
+    }
   };
 
   useEffect(() => {
@@ -29,6 +44,8 @@ export const Map = () => {
     setMapKey(prev => prev + 1); // Force iframe reload
     console.log('New map URL:', newMapUrl);
   };
+
+  const currentCityInfo = cityInfo[selectedCity as keyof typeof cityInfo];
 
   if (!mapUrl && !cityMaps[selectedCity as keyof typeof cityMaps]) {
     return (
@@ -110,12 +127,12 @@ export const Map = () => {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title={`Localização em ${selectedCity === 'barra-mansa' ? 'Barra Mansa' : 'Volta Redonda'}`}
+              title={`Localização Conquista ${currentCityInfo.name}`}
               className="rounded-3xl filter brightness-105 contrast-105"
             />
           </div>
 
-          {/* Info cards */}
+          {/* Info cards atualizados */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
             <div className="glass-effect rounded-2xl p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
               <div className="flex items-start gap-4">
@@ -123,13 +140,9 @@ export const Map = () => {
                   <MapPin className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg mb-2">Endereço</h3>
-                  <p className="text-muted-foreground">
-                    {selectedCity === 'barra-mansa' 
-                      ? 'Centro de Barra Mansa, RJ' 
-                      : 'Centro de Volta Redonda, RJ'
-                    }
-                  </p>
+                  <h3 className="font-semibold text-lg mb-2">Conquista {currentCityInfo.name}</h3>
+                  <p className="text-muted-foreground mb-1">{currentCityInfo.address}</p>
+                  <p className="text-muted-foreground text-sm">{currentCityInfo.city}</p>
                 </div>
               </div>
             </div>
@@ -137,12 +150,12 @@ export const Map = () => {
             <div className="glass-effect rounded-2xl p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-secondary/10 rounded-xl">
-                  <Navigation className="h-6 w-6 text-secondary-foreground" />
+                  <Clock className="h-6 w-6 text-secondary-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg mb-2">Como Chegar</h3>
+                  <h3 className="font-semibold text-lg mb-2">Horário de Funcionamento</h3>
                   <p className="text-muted-foreground">
-                    Fácil acesso por transporte público e particular
+                    {currentCityInfo.hours}
                   </p>
                 </div>
               </div>
