@@ -17,15 +17,18 @@ const AdminLogin = () => {
   const { toast } = useToast();
 
   useEffect(() => {
+    console.log('AdminLogin: Checking if user is already authenticated');
     try {
       // Check if user is already logged in
       const user = authService.getCurrentUser();
       if (user) {
-        console.log('User already authenticated, redirecting to dashboard');
+        console.log('AdminLogin: User already authenticated, redirecting to dashboard');
         navigate('/admin/dashboard');
+      } else {
+        console.log('AdminLogin: No user authenticated, staying on login page');
       }
     } catch (error) {
-      console.error('Error checking current user:', error);
+      console.error('AdminLogin: Error checking current user:', error);
     }
   }, [navigate]);
 
@@ -34,25 +37,30 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      console.log('Form submission - Email:', email);
-      console.log('Form submission - Password length:', password.length);
-      console.log('Form submission - Email trimmed:', email.trim());
+      console.log('AdminLogin: Starting login process');
+      console.log('AdminLogin: Form submission - Email:', email);
+      console.log('AdminLogin: Form submission - Password length:', password.length);
+      console.log('AdminLogin: Form submission - Email trimmed:', email.trim());
       
       const user = authService.login(email, password);
       
       if (user) {
-        console.log('Login successful, user:', user);
+        console.log('AdminLogin: Login successful, user:', user);
+        
+        // Verify the user was stored correctly
+        const storedUser = authService.getCurrentUser();
+        console.log('AdminLogin: Stored user verification:', storedUser);
+        
         toast({
           title: "Login realizado com sucesso!",
           description: "Redirecionando para o painel administrativo...",
         });
         
-        // Small delay to show the toast
-        setTimeout(() => {
-          navigate('/admin/dashboard');
-        }, 1000);
+        // Immediate redirect without delay
+        console.log('AdminLogin: Redirecting to dashboard...');
+        navigate('/admin/dashboard', { replace: true });
       } else {
-        console.log('Login failed - invalid credentials returned from authService');
+        console.log('AdminLogin: Login failed - invalid credentials returned from authService');
         toast({
           title: "Erro no login",
           description: "Email ou senha incorretos. Use: conquista@imobhub.com.br e Conquista2025#",
@@ -60,7 +68,7 @@ const AdminLogin = () => {
         });
       }
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('AdminLogin: Login error:', error);
       toast({
         title: "Erro no login",
         description: "Ocorreu um erro ao tentar fazer login.",

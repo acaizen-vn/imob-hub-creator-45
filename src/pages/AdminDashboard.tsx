@@ -15,37 +15,58 @@ type ActiveTab = 'properties' | 'cities' | 'news' | 'settings' | 'seo' | 'market
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('properties');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    try {
-      const user = authService.getCurrentUser();
-      if (!user) {
-        console.log('User not authenticated, redirecting to login');
+    console.log('AdminDashboard: Starting authentication check');
+    
+    const checkAuth = async () => {
+      try {
+        console.log('AdminDashboard: Checking current user...');
+        const user = authService.getCurrentUser();
+        console.log('AdminDashboard: Current user result:', user);
+        
+        if (!user) {
+          console.log('AdminDashboard: No user found, redirecting to login');
+          navigate('/admin');
+          return;
+        }
+        
+        console.log('AdminDashboard: User authenticated successfully:', user);
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error('AdminDashboard: Error checking authentication:', error);
         navigate('/admin');
+      } finally {
+        console.log('AdminDashboard: Authentication check completed');
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error('Error checking authentication:', error);
-      navigate('/admin');
-    }
+    };
+
+    checkAuth();
   }, [navigate]);
 
   const handleLogout = () => {
     try {
+      console.log('AdminDashboard: Logging out...');
       authService.logout();
       navigate('/admin');
     } catch (error) {
-      console.error('Error during logout:', error);
+      console.error('AdminDashboard: Error during logout:', error);
       navigate('/admin');
     }
   };
 
   const handleTabChange = (tab: string) => {
+    console.log('AdminDashboard: Changing tab to:', tab);
     setActiveTab(tab as ActiveTab);
   };
 
   const renderContent = () => {
     try {
+      console.log('AdminDashboard: Rendering content for tab:', activeTab);
       switch (activeTab) {
         case 'properties':
           return <PropertyManager />;
@@ -63,7 +84,7 @@ const AdminDashboard = () => {
           return <PropertyManager />;
       }
     } catch (error) {
-      console.error('Error rendering content:', error);
+      console.error('AdminDashboard: Error rendering content:', error);
       return (
         <div className="text-white p-4">
           <h2 className="text-xl font-bold mb-2">Erro ao carregar conteúdo</h2>
@@ -79,6 +100,26 @@ const AdminDashboard = () => {
     }
   };
 
+  // Show loading screen while checking authentication
+  if (isLoading) {
+    console.log('AdminDashboard: Showing loading screen');
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 flex items-center justify-center">
+        <div className="text-white text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <p>Verificando autenticação...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Only render dashboard if authenticated
+  if (!isAuthenticated) {
+    console.log('AdminDashboard: Not authenticated, should redirect');
+    return null;
+  }
+
+  console.log('AdminDashboard: Rendering full dashboard');
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900">
       <Header onLogout={handleLogout} />
