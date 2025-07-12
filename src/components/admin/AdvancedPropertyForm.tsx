@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -154,14 +153,48 @@ export const AdvancedPropertyForm = ({ property, onSave, onCancel }: AdvancedPro
   }, [property, form]);
 
   const handleSubmit = (data: z.infer<typeof propertySchema>) => {
-    const propertyData = {
-      ...data,
+    const propertyData: Omit<Property, 'id' | 'createdAt'> = {
+      title: data.title,
+      description: data.description,
+      price: data.price,
+      type: data.type,
+      purpose: data.purpose,
+      city: data.city,
+      address: data.address,
+      area: data.area,
       images: images.filter(img => img.trim() !== ''),
+      featured: data.featured,
+      status: data.status,
+      priority: data.priority,
+      neighborhood: data.neighborhood,
+      zipCode: data.zipCode,
+      builtArea: data.builtArea,
+      totalArea: data.totalArea,
+      bedrooms: data.bedrooms,
+      bathrooms: data.bathrooms,
+      suites: data.suites,
+      garage: data.garage,
+      balconies: data.balconies,
+      floor: data.floor,
+      floors: data.floors,
+      elevators: data.elevators,
+      orientation: data.orientation,
+      conditions: data.conditions,
+      virtualTour: data.virtualTour,
+      videoUrl: data.videoUrl,
+      seoTitle: data.seoTitle,
+      seoDescription: data.seoDescription,
       amenities,
       tags,
       documents,
       nearbyPlaces,
       keyHolders,
+      slug: undefined,
+      publishedOn: undefined,
+      notes: undefined,
+      visits: undefined,
+      mapCoordinates: undefined,
+      financingOptions: undefined,
     };
     onSave(propertyData);
   };
@@ -381,7 +414,6 @@ export const AdvancedPropertyForm = ({ property, onSave, onCancel }: AdvancedPro
             </Card>
           </TabsContent>
 
-          {/* Continua nas próximas tabs... */}
           <TabsContent value="details" className="space-y-4">
             <Card>
               <CardHeader>
