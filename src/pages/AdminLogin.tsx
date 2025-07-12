@@ -17,10 +17,15 @@ const AdminLogin = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check if user is already logged in
-    const user = authService.getCurrentUser();
-    if (user) {
-      navigate('/admin/dashboard');
+    try {
+      // Check if user is already logged in
+      const user = authService.getCurrentUser();
+      if (user) {
+        console.log('User already authenticated, redirecting to dashboard');
+        navigate('/admin/dashboard');
+      }
+    } catch (error) {
+      console.error('Error checking current user:', error);
     }
   }, [navigate]);
 
@@ -29,14 +34,22 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
+      console.log('Attempting login with:', { email, password: '***' });
       const user = authService.login(email, password);
+      
       if (user) {
+        console.log('Login successful, user:', user);
         toast({
           title: "Login realizado com sucesso!",
           description: "Redirecionando para o painel administrativo...",
         });
-        navigate('/admin/dashboard');
+        
+        // Small delay to show the toast
+        setTimeout(() => {
+          navigate('/admin/dashboard');
+        }, 1000);
       } else {
+        console.log('Login failed - invalid credentials');
         toast({
           title: "Erro no login",
           description: "Email ou senha incorretos.",
@@ -44,6 +57,7 @@ const AdminLogin = () => {
         });
       }
     } catch (error) {
+      console.error('Login error:', error);
       toast({
         title: "Erro no login",
         description: "Ocorreu um erro ao tentar fazer login.",

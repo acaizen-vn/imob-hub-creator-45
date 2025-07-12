@@ -18,15 +18,26 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = authService.getCurrentUser();
-    if (!user) {
+    try {
+      const user = authService.getCurrentUser();
+      if (!user) {
+        console.log('User not authenticated, redirecting to login');
+        navigate('/admin');
+      }
+    } catch (error) {
+      console.error('Error checking authentication:', error);
       navigate('/admin');
     }
   }, [navigate]);
 
   const handleLogout = () => {
-    authService.logout();
-    navigate('/admin');
+    try {
+      authService.logout();
+      navigate('/admin');
+    } catch (error) {
+      console.error('Error during logout:', error);
+      navigate('/admin');
+    }
   };
 
   const handleTabChange = (tab: string) => {
@@ -34,21 +45,37 @@ const AdminDashboard = () => {
   };
 
   const renderContent = () => {
-    switch (activeTab) {
-      case 'properties':
-        return <PropertyManager />;
-      case 'cities':
-        return <CityManager />;
-      case 'news':
-        return <NewsManager />;
-      case 'settings':
-        return <SiteSettings />;
-      case 'seo':
-        return <SEOTools />;
-      case 'marketing':
-        return <MarketingTools />;
-      default:
-        return <PropertyManager />;
+    try {
+      switch (activeTab) {
+        case 'properties':
+          return <PropertyManager />;
+        case 'cities':
+          return <CityManager />;
+        case 'news':
+          return <NewsManager />;
+        case 'settings':
+          return <SiteSettings />;
+        case 'seo':
+          return <SEOTools />;
+        case 'marketing':
+          return <MarketingTools />;
+        default:
+          return <PropertyManager />;
+      }
+    } catch (error) {
+      console.error('Error rendering content:', error);
+      return (
+        <div className="text-white p-4">
+          <h2 className="text-xl font-bold mb-2">Erro ao carregar conteúdo</h2>
+          <p>Ocorreu um erro ao carregar esta seção. Tente recarregar a página.</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Recarregar Página
+          </button>
+        </div>
+      );
     }
   };
 
