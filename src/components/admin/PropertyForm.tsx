@@ -30,6 +30,8 @@ export const PropertyForm = ({ property, onSave, onCancel }: PropertyFormProps) 
     garage: 0,
     images: [''],
     featured: false,
+    status: 'available' as Property['status'],
+    priority: 'medium' as Property['priority'],
   });
 
   const [cities, setCities] = useState<string[]>([]);
@@ -55,6 +57,8 @@ export const PropertyForm = ({ property, onSave, onCancel }: PropertyFormProps) 
         garage: property.garage || 0,
         images: property.images,
         featured: property.featured,
+        status: property.status,
+        priority: property.priority,
       });
     }
   }, [property]);

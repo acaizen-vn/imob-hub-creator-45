@@ -56,6 +56,8 @@ export const initializeDefaultData = () => {
       email: 'conquista@imobhub.com.br',
       name: 'Admin Conquista',
       role: 'admin',
+      isActive: true,
+      createdAt: new Date().toISOString(),
     };
     storage.set(STORAGE_KEYS.USERS, [defaultUser]);
   }

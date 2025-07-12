@@ -64,7 +64,7 @@ export const AdvancedPropertyForm = ({ property, onSave, onCancel }: AdvancedPro
   const [documents, setDocuments] = useState<PropertyDocument[]>([]);
   const [nearbyPlaces, setNearbyPlaces] = useState<NearbyPlace[]>([]);
   const [keyHolders, setKeyHolders] = useState<KeyHolder[]>([]);
-  
+
   const form = useForm<z.infer<typeof propertySchema>>({
     resolver: zodResolver(propertySchema),
     defaultValues: {
