@@ -34,7 +34,10 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      console.log('Attempting login with:', { email, password: '***' });
+      console.log('Form submission - Email:', email);
+      console.log('Form submission - Password length:', password.length);
+      console.log('Form submission - Email trimmed:', email.trim());
+      
       const user = authService.login(email, password);
       
       if (user) {
@@ -49,10 +52,10 @@ const AdminLogin = () => {
           navigate('/admin/dashboard');
         }, 1000);
       } else {
-        console.log('Login failed - invalid credentials');
+        console.log('Login failed - invalid credentials returned from authService');
         toast({
           title: "Erro no login",
-          description: "Email ou senha incorretos.",
+          description: "Email ou senha incorretos. Use: conquista@imobhub.com.br e Conquista2025#",
           variant: "destructive",
         });
       }
@@ -66,6 +69,12 @@ const AdminLogin = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Helper function to fill default credentials
+  const fillDefaultCredentials = () => {
+    setEmail('conquista@imobhub.com.br');
+    setPassword('Conquista2025#');
   };
 
   return (
@@ -102,6 +111,7 @@ const AdminLogin = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                autoComplete="username"
               />
             </div>
 
@@ -117,6 +127,7 @@ const AdminLogin = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  autoComplete="current-password"
                 />
                 <Button
                   type="button"
@@ -144,11 +155,20 @@ const AdminLogin = () => {
           </form>
 
           <div className="mt-6 p-4 bg-muted rounded-lg">
-            <p className="text-sm text-muted-foreground text-center">
+            <p className="text-sm text-muted-foreground text-center mb-3">
               <strong>Login padrão:</strong><br />
               Email: conquista@imobhub.com.br<br />
               Senha: Conquista2025#
             </p>
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full"
+              onClick={fillDefaultCredentials}
+              type="button"
+            >
+              Preencher credenciais automaticamente
+            </Button>
           </div>
         </CardContent>
       </Card>

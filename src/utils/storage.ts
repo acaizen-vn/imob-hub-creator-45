@@ -235,21 +235,61 @@ export const newsService = {
 
 export const authService = {
   login: (email: string, password: string): User | null => {
-    // Hardcoded login for demo
-    if (email === 'conquista@imobhub.com.br' && password === 'Conquista2025#') {
-      const user = storage.get<User>(STORAGE_KEYS.USERS)[0];
+    console.log('Login attempt - Email:', email);
+    console.log('Login attempt - Password length:', password.length);
+    
+    // Trim whitespace and normalize
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedPassword = password.trim();
+    
+    console.log('Normalized email:', normalizedEmail);
+    console.log('Expected email:', 'conquista@imobhub.com.br');
+    console.log('Email match:', normalizedEmail === 'conquista@imobhub.com.br');
+    console.log('Password match:', normalizedPassword === 'Conquista2025#');
+    
+    // Hardcoded login for demo - with detailed logging
+    if (normalizedEmail === 'conquista@imobhub.com.br' && normalizedPassword === 'Conquista2025#') {
+      console.log('Credentials validated successfully');
+      
+      // Get or create default user
+      let users = storage.get<User>(STORAGE_KEYS.USERS);
+      if (users.length === 0) {
+        console.log('No users found, creating default user');
+        const defaultUser: User = {
+          id: '1',
+          email: 'conquista@imobhub.com.br',
+          name: 'Admin Conquista',
+          role: 'admin',
+          isActive: true,
+          createdAt: new Date().toISOString(),
+        };
+        users = [defaultUser];
+        storage.set(STORAGE_KEYS.USERS, users);
+      }
+      
+      const user = users[0];
+      console.log('User to authenticate:', user);
+      
+      // Store authentication
       storage.setSingle(STORAGE_KEYS.AUTH, user);
+      console.log('User stored in auth storage');
+      
       return user;
     }
+    
+    console.log('Login failed - credentials do not match');
     return null;
   },
 
   logout: (): void => {
+    console.log('Logging out user');
     localStorage.removeItem(STORAGE_KEYS.AUTH);
   },
 
   getCurrentUser: (): User | null => {
-    return storage.getSingle<User>(STORAGE_KEYS.AUTH);
+    const user = storage.getSingle<User>(STORAGE_KEYS.AUTH);
+    console.log('Getting current user:', user);
+    return user;
   },
 };
 
